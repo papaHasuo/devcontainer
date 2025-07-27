@@ -54,6 +54,7 @@ services:
     volumes:
       - sqlserver-data:/var/opt/mssql
       - ./docker/sqlserver/init:/docker-entrypoint-initdb.d
+    command: ["/bin/bash", "-c", "chmod +x /docker-entrypoint-initdb.d/entrypoint.sh && /docker-entrypoint-initdb.d/entrypoint.sh"]
     networks:
       - dev-network
 
