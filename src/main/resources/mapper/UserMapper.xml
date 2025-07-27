@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.devcontainer.mapper.UserMapper">
+    
+    <resultMap id="UserResultMap" type="com.example.devcontainer.entity.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+    
+    <select id="findAllByXml" resultMap="UserResultMap">
+        SELECT id, name, email, created_at, updated_at
+        FROM users
+        ORDER BY id DESC
+    </select>
+    
+    <select id="findByIdByXml" parameterType="Long" resultMap="UserResultMap">
+        SELECT id, name, email, created_at, updated_at
+        FROM users
+        WHERE id = #{id}
+    </select>
+    
+    <insert id="insertByXml" parameterType="com.example.devcontainer.entity.User">
+        INSERT INTO users (name, email, created_at, updated_at)
+        VALUES (#{name}, #{email}, GETDATE(), GETDATE())
+    </insert>
+    
+    <update id="updateByXml" parameterType="com.example.devcontainer.entity.User">
+        UPDATE users 
+        SET name = #{name}, 
+            email = #{email}, 
+            updated_at = GETDATE()
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteByIdByXml" parameterType="Long">
+        DELETE FROM users WHERE id = #{id}
+    </delete>
+    
+</mapper>
