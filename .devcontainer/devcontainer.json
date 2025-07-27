@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/java
 {
-  "name": "Java",
+  "name": "Java & SQL Server",
   // Docker Compose構成を使用
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
@@ -11,7 +11,7 @@
   "shutdownAction": "stopCompose",
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [8080],
+  "forwardPorts": [8080, 1433],
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "java -version",
