@@ -39,3 +39,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootRun {
+	jvmArgs = ['-Dspring.devtools.restart.enabled=true']
+}
