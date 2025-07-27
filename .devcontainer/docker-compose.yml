@@ -22,6 +22,11 @@ services:
     # 環境変数
     environment:
       - JAVA_HOME=/usr/local/openjdk-21
+      - DB_HOST=sqlserver
+      - DB_PORT=1433
+      - DB_NAME=devdb
+      - DB_USER=sa
+      - DB_PASSWORD=YourStrong@Passw0rd
     
     # 作業ディレクトリ
     working_dir: /workspace
@@ -32,10 +37,29 @@ services:
     # ネットワーク設定
     networks:
       - dev-network
+    
+    # SQL Serverが起動するまで待機
+    depends_on:
+      sqlserver:
+        condition: service_started  # または service_healthy
+        required: true
+
+  # SQL Server サービス（Dockerfileを使用）
+  sqlserver:
+    build:
+      context: ./docker/sqlserver
+      dockerfile: Dockerfile
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+      - ./docker/sqlserver/init:/docker-entrypoint-initdb.d
+    networks:
+      - dev-network
 
 volumes:
   gradle-cache:
-  maven-cache:
+  sqlserver-data:
 
 networks:
   dev-network:
