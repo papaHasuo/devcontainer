@@ -14,7 +14,7 @@ END
 IF NOT EXISTS (SELECT * FROM users)
 BEGIN
     INSERT INTO users (name, email) VALUES 
-    ('山田太郎', 'yamada@example.com'),
-    ('佐藤花子', 'sato@example.com'),
-    ('田中次郎', 'tanaka@example.com');
+    (N'山田太郎', 'yamada@example.com'),
+    (N'佐藤花子', 'sato@example.com'),
+    (N'田中次郎', 'tanaka@example.com');
 END

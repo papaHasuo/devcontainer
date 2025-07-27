@@ -131,8 +131,8 @@
                         <td th:text="${user.id}">1</td>
                         <td th:text="${user.name}">太郎</td>
                         <td th:text="${user.email}">taro@example.com</td>
-                        <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm:ss')}" th:if="${user.createdAt}">2024-01-01 10:00:00</td>
-                        <td th:text="${#temporals.format(user.updatedAt, 'yyyy-MM-dd HH:mm:ss')}" th:if="${user.updatedAt}">2024-01-01 10:00:00</td>
+                        <td th:text="${user.createdAt != null ? user.createdAt : '-'}">2024-01-01 10:00:00</td>
+                        <td th:text="${user.updatedAt != null ? user.updatedAt : '-'}">2024-01-01 10:00:00</td>
                     </tr>
                 </tbody>
             </table>
