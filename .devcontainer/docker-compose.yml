@@ -1,0 +1,42 @@
+services:
+  app:
+    build:
+      context: ./docker/java
+      dockerfile: Dockerfile
+    
+    volumes:
+      # ワークスペースをマウント
+      - ../..:/workspace:cached
+      
+      # Git設定を保持
+      - ~/.gitconfig:/home/vscode/.gitconfig:ro
+      - ~/.ssh:/home/vscode/.ssh:ro
+      
+      # Gradleキャッシュを保持
+      - gradle-cache:/home/vscode/.gradle
+
+    # ポートフォワーディング
+    ports:
+      - "8080:8080"
+    
+    # 環境変数
+    environment:
+      - JAVA_HOME=/usr/local/openjdk-21
+    
+    # 作業ディレクトリ
+    working_dir: /workspace
+    
+    # コンテナを起動し続ける
+    command: sleep infinity
+    
+    # ネットワーク設定
+    networks:
+      - dev-network
+
+volumes:
+  gradle-cache:
+  maven-cache:
+
+networks:
+  dev-network:
+    driver: bridge
