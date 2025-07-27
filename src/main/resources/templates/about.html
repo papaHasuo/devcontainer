@@ -77,22 +77,24 @@
             margin-top: 0;
             color: #fff;
         }
-        .back-link {
-            display: block;
+        .back-link, .nav-link {
+            display: inline-block;
             text-align: center;
-            margin-top: 30px;
+            margin: 10px 5px;
             color: white;
             text-decoration: none;
             padding: 12px 24px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 25px;
             transition: all 0.3s ease;
-            width: fit-content;
-            margin: 30px auto 0;
         }
-        .back-link:hover {
+        .back-link:hover, .nav-link:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
+        }
+        .nav-links {
+            text-align: center;
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -141,7 +143,11 @@
             </ul>
         </div>
 
-        <a href="/" class="back-link">← ホームに戻る</a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">ホーム</a>
+            <a href="/hello" class="nav-link">挨拶</a>
+            <a href="/users" class="nav-link">ユーザー管理</a>
+        </div>
     </div>
 </body>
 </html>

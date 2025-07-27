@@ -5,9 +5,8 @@ import com.example.devcontainer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -50,13 +49,46 @@ public class HomeController {
     }
 
     @GetMapping("/users")
+    public String usersPage(Model model) {
+        try {
+            List<User> users = userService.getAllUsers();
+            model.addAttribute("title", "ユーザー一覧");
+            model.addAttribute("users", users);
+        } catch (Exception e) {
+            // テーブルが存在しない場合は空のリストを設定
+            model.addAttribute("title", "ユーザー一覧");
+            model.addAttribute("users", List.of());
+            model.addAttribute("error", "データベースに接続できないか、ユーザーテーブルが存在しません。");
+        }
+        return "users";
+    }
+
+    @GetMapping("/api/users")
     @ResponseBody
-    public List<User> getUsers() {
+    public List<User> getUsersApi() {
         try {
             return userService.getAllUsers();
         } catch (Exception e) {
             // テーブルが存在しない場合は空のリストを返す
             return List.of();
         }
+    }
+
+    @GetMapping("/user/create")
+    public String createUserPage(Model model) {
+        model.addAttribute("title", "ユーザー作成");
+        model.addAttribute("user", new User());
+        return "user_create";
+    }
+
+    @PostMapping("/user/create")
+    public String createUser(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+        try {
+            userService.createUser(user);
+            redirectAttributes.addFlashAttribute("successMessage", "ユーザー「" + user.getName() + "」を作成しました。");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "ユーザーの作成に失敗しました: " + e.getMessage());
+        }
+        return "redirect:/users";
     }
 }

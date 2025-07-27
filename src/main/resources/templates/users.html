@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">ユーザー一覧</title>
+    <style>
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .nav-links {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .nav-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-links a:hover {
+            background: #5a6fd8;
+        }
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .user-table th, .user-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .user-table th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        .user-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        .create-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 12px 24px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .create-button:hover {
+            background: #218838;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .alert-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .no-users {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${title}">ユーザー一覧</h1>
+        
+        <div class="nav-links">
+            <a href="/">ホーム</a>
+            <a href="/hello">挨拶</a>
+            <a href="/about">このアプリについて</a>
+        </div>
+
+        <!-- 成功メッセージ -->
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        
+        <!-- エラーメッセージ -->
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        
+        <a href="/user/create" class="create-button">新しいユーザーを作成</a>
+        
+        <div th:if="${users != null and not #lists.isEmpty(users)}">
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>名前</th>
+                        <th>メールアドレス</th>
+                        <th>作成日時</th>
+                        <th>更新日時</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}">1</td>
+                        <td th:text="${user.name}">太郎</td>
+                        <td th:text="${user.email}">taro@example.com</td>
+                        <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm:ss')}" th:if="${user.createdAt}">2024-01-01 10:00:00</td>
+                        <td th:text="${#temporals.format(user.updatedAt, 'yyyy-MM-dd HH:mm:ss')}" th:if="${user.updatedAt}">2024-01-01 10:00:00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div th:if="${users == null or #lists.isEmpty(users)}" class="no-users">
+            <p>登録されているユーザーがありません。</p>
+            <p th:if="${error == null}">最初のユーザーを作成してみましょう！</p>
+        </div>
+    </div>
+</body>
+</html>

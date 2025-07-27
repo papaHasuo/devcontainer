@@ -63,9 +63,9 @@
         button:hover {
             background: #45a049;
         }
-        .back-link {
+        .back-link, .nav-link {
             display: inline-block;
-            margin-top: 30px;
+            margin: 10px 5px;
             color: white;
             text-decoration: none;
             padding: 12px 24px;
@@ -73,9 +73,13 @@
             border-radius: 25px;
             transition: all 0.3s ease;
         }
-        .back-link:hover {
+        .back-link:hover, .nav-link:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
+        }
+        .nav-links {
+            text-align: center;
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -96,7 +100,11 @@
             </form>
         </div>
 
-        <a href="/" class="back-link">← ホームに戻る</a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">ホーム</a>
+            <a href="/about" class="nav-link">このアプリについて</a>
+            <a href="/users" class="nav-link">ユーザー管理</a>
+        </div>
     </div>
 </body>
 </html>
